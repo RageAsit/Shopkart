@@ -91,12 +91,17 @@ export const loginCustomer = async (req, res) => {
 
     const token = generateToken(customer._id);
 
-    const isProduction = process.env.NODE_ENV === "production";
+    const isProduction =
+      process.env.NODE_ENV === "production" ||
+      Boolean(process.env.RENDER) ||
+      req.secure ||
+      req.headers["x-forwarded-proto"] === "https";
 
     res.cookie("token", token, {
       httpOnly: true,
       secure: isProduction,
       sameSite: isProduction ? "none" : "lax",
+      maxAge: 7 * 24 * 60 * 60 * 1000,
     });
 
     return res.status(200).json({
@@ -132,7 +137,11 @@ export const getMyProfile = async (req, res) => {
 //LOGOUT
 export const logOutCustomer = async (req, res) => {
   try {
-    const isProduction = process.env.NODE_ENV === "production";
+    const isProduction =
+      process.env.NODE_ENV === "production" ||
+      Boolean(process.env.RENDER) ||
+      req.secure ||
+      req.headers["x-forwarded-proto"] === "https";
 
     res.clearCookie("token", {
       httpOnly: true,

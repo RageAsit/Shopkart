@@ -16,6 +16,7 @@ function Navbar() {
     } catch (err) {
       console.error('Logout error:', err);
     } finally {
+      localStorage.removeItem('token');
       setCustomer(null);
       navigate('/login');
     }

@@ -45,6 +45,11 @@ function ProductCard({ product }) {
     e.preventDefault();
     e.stopPropagation();
 
+    if (!customer) {
+      navigate('/login');
+      return;
+    }
+
     // Prevent duplicate clicks while saving or if already added
     if (status === 'loading' || status === 'success') {
       return;
@@ -74,11 +79,13 @@ function ProductCard({ product }) {
     } catch (err) {
       console.error('Error adding to wishlist:', err);
       setStatus('idle');
+      if (err.response?.status === 401) {
+        navigate('/login');
+        return;
+      }
       const msg =
         err.response?.data?.message ||
-        (err.response?.status === 401
-          ? 'Please log in to add to wishlist'
-          : err.response?.status === 409
+        (err.response?.status === 409
           ? 'Product already in wishlist'
           : 'Failed to add to wishlist');
       setErrorMessage(msg);
@@ -88,6 +95,11 @@ function ProductCard({ product }) {
   const handleAddToCart = async (e) => {
     e.preventDefault();
     e.stopPropagation();
+
+    if (!customer) {
+      navigate('/login');
+      return;
+    }
 
     if (isAddingToCart || product.stock <= 0) {
       return;
@@ -99,6 +111,10 @@ function ProductCard({ product }) {
     try {
       const res = await addToCart(product._id);
       if (!res?.success) {
+        if (res?.error === 'Unauthorized') {
+          navigate('/login');
+          return;
+        }
         setCartError(res?.error || 'Failed to add to cart');
       }
     } catch (err) {

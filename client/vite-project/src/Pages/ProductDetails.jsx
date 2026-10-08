@@ -2,10 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { axiosInstance } from '../axiosCalls/axios.js';
 import { useCart } from '../context/CartContext';
+import { useAuth } from '../context/AuthContext';
 
 function ProductDetails() {
   const { id } = useParams();
   const navigate = useNavigate();
+  const { customer } = useAuth();
   const { cartItems, addToCart } = useCart();
 
   const [product, setProduct] = useState(null);
@@ -53,6 +55,11 @@ function ProductDetails() {
   }, [id]);
 
   const handleAddToCart = async () => {
+    if (!customer) {
+      navigate('/login');
+      return;
+    }
+
     if (!product || product.stock <= 0 || isAddingToCart) return;
 
     setIsAddingToCart(true);
@@ -63,6 +70,10 @@ function ProductDetails() {
         setAddedToCart(true);
         setTimeout(() => setAddedToCart(false), 2000);
       } else {
+        if (res?.error === 'Unauthorized') {
+          navigate('/login');
+          return;
+        }
         setCartError(res?.error || 'Failed to add to cart');
       }
     } catch (err) {

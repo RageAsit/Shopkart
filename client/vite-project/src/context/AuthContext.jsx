@@ -14,6 +14,9 @@ export const AuthProvider = ({children})=>{
                 const customerData = await axiosInstance.get('/customers/me');
                 setCustomer(customerData.data);
             } catch (err) {
+                if (err.response?.status === 401) {
+                    localStorage.removeItem('token');
+                }
                 setCustomer(null);
             } finally {
                 setLoading(false);

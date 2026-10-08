@@ -20,6 +20,9 @@ function Login() {
     e.preventDefault();
     try {
       const res = await axiosInstance.post("/customers/login", form);
+      if (res.data?.token) {
+        localStorage.setItem("token", res.data.token);
+      }
       setCustomer(res.data.customerData);
       console.log("User Logged in successfully");
       navigate("/home");
