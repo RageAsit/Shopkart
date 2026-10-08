@@ -11,7 +11,7 @@ export const AuthProvider = ({children})=>{
     useEffect(()=>{
         const fetchCustomer = async ()=>{
             try {
-                const customerData = await axiosInstance.get('customers/me');
+                const customerData = await axiosInstance.get('/customers/me');
                 setCustomer(customerData.data);
             } catch (err) {
                 setCustomer(null);
