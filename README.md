@@ -2,6 +2,25 @@
 
 A full-stack, responsive e-commerce web application built on the MERN stack (MongoDB, Express.js, React, Node.js) with Tailwind CSS styling and integrated Razorpay payment processing.
 
+🚀 **Live Deployment:** [https://shop-kart-blond.vercel.app](https://shop-kart-blond.vercel.app)  
+⚙️ **Backend API:** [https://shopkart-backend-cocn.onrender.com](https://shopkart-backend-cocn.onrender.com)
+
+---
+
+## 💳 Demo Payment & Test Credentials
+
+You can test the complete end-to-end purchasing and checkout flow on the live site using Razorpay's test credentials:
+
+| Field | Value |
+| :--- | :--- |
+| **Card Number** | `4100 2800 0000 1007` |
+| **Expiry Date** | `12/26` |
+| **CVV / PIN** | `123` |
+| **OTP** | Any 4- or 6-digit number (e.g., `1234`) |
+
+> [!TIP]
+> You can register a new account directly on the live storefront or log in to manage your cart, add items to your wishlist, and place orders with instant payment verification.
+
 ---
 
 ## Overview
