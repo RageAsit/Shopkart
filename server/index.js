@@ -20,7 +20,7 @@ app.use(cookieParser())
 
 app.use(cors(
         {
-            origin: "http://localhost:5173", "https://shop-kart-blond.vercel.app/",
+            origin: ["http://localhost:5173", "https://shop-kart-blond.vercel.app/"],
             credentials: true,
             methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
         }
